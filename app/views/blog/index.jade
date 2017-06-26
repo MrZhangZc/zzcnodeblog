@@ -1,0 +1,71 @@
+extends layout
+
+block about
+  img(src="/img/bg2.jpg" id="photo")
+  video(src="/img/1.mp4" controls="controls" id="video")
+  .blog-images
+    .pic.pic1
+    .pic.pic2
+    .pic.pic3
+    .pic.pic4
+    .pic.pic5
+    .pic.pic6
+  .blog-about
+    .about-title
+      p Welcome to Zhang Zhichao's personal blog
+    .about-content
+      h4 This is a full stack blogging system based on nodejs
+      h4 The main function of blogs is to write some learning experiences
+      h4 You can leave a message and communicate with me
+    button#about-click 
+      p Click On 
+block content
+  each post in posts
+    .post.post-every
+      h3.post-title
+        a(href="/posts/view/" + post.slug, target="_blank") #{post.title}
+      .post-abstract #{truncate(post.content,150)}
+      .post-meta
+        span.post-create 发布时间:&nbsp; #{moment(post.created).format('YYYY-MM-DD')}
+        span.post-auther 作者:&nbsp; #{post.author.name}
+        span.post-category 类别:&nbsp; 
+          a(href='/posts/category/' + post.category.title, target="_black") #{post.category.title}
+        span.post-comment 评论:&nbsp; #{post.comments.length || 0}
+        span.post-favorite 被赞:&nbsp; #{post.meta.favorite || 0}
+        span.post-link
+          a(href="/posts/view/" + post.slug, target="_blank") 查看全文
+  if pageCount > 1
+    nav
+      ul.pagination
+        - var currentPage = 1
+        while currentPage < pageCount
+          if (currentPage === pageNum)
+            li.active
+               a(href="/posts?page=" + currentPage)= currentPage++
+          else
+            li
+               a(href="/posts?page=" + currentPage)= currentPage++
+block other
+  .container
+    .row
+      .col-sm-6
+        form.blog-contactMe(action="/posts/contactMe/" method="post", enctype="application/x-www-form-urlencoded")
+          p.blog-contactMe-title Contact Me
+          .form-group
+            label(for="name") Name
+            input.form-control(type="text", name="email", placeholder="Your Name...")
+          .form-group
+            label(for="email") Email
+            input.form-control(type="text", name="email", placeholder="Your Name...")
+          .form-group
+            label(for="content") Content
+            textarea.form-control(type="text", name="content", placeholder="Content...")
+          button.btn.btn-primary Send
+      .col-sm-6.blog-other
+        .col-sm-6
+          .blog-1
+        .col-sm-6
+          .blog-2
+        .blog-3
+  script(src="/js/index.js")
+
