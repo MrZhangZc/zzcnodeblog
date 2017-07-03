@@ -3,24 +3,6 @@ var path = require('path'),
     env = process.env.NODE_ENV || 'production';
 
 var config = {
-  development: {
-    root: rootPath,
-    app: {
-      name: 'blogzzc'
-    },
-    port: process.env.PORT || 5555,
-    db: 'mongodb://localhost/blogzzc-test'
-  },
-
-  test: {
-    root: rootPath,
-    app: {
-      name: 'blogzzc'
-    },
-    port: process.env.PORT || 5555,
-    db: 'mongodb://localhost/blogzzc-test'
-  },
-
   production: {
     root: rootPath,
     app: {
