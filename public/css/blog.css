@@ -21,6 +21,11 @@ text-decoration: none;
   src: url('/fonts/BertramLP.ttf')
 }
 
+@font-face{
+  font-family: yhl;
+  src: url('/fonts/yhl.ttf')
+}
+
 h1, .h1,
 h2, .h2,
 h3, .h3,
@@ -230,6 +235,7 @@ h6, .h6 {
   margin-bottom: 40px;
   background-color: #FFF;
   padding: 40px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .post-title{
@@ -357,4 +363,21 @@ h6, .h6 {
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+
+#messages .error{
+  margin: 0;
+  padding: 0
+}
+
+#messages .error li{
+  list-style: none;
+  padding: 5px;
+  margin-bottom: 10px;
+  border:1px solid transparent;
+  border-radius: 4px;
+  color:#a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1
 }

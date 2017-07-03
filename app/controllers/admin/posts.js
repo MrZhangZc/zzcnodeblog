@@ -1,15 +1,18 @@
 var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
+    slug     = require('slug'),
+    pinyin     = require('pinyin'),
+    auth     = require('./users'),
     Post = mongoose.model('Post'),
     User = mongoose.model('User'),
-    Category = mongoose.model('Category');
+    Category = mongoose.model('Category')
 
 module.exports = function (app) {
-    app.use('/admin/posts', router);
-};
+    app.use('/admin/posts', router)
+}
 
-router.get('/', function (req, res, next) {
+router.get('/', auth.requireLogin,function (req, res, next) {
   //sort
   var sortby = req.query.sortby ? req.query.sortby : 'created'
   var sortdir = req.query.sortdir ? req.query.sortdir : 'desc'
@@ -35,6 +38,10 @@ router.get('/', function (req, res, next) {
       conditions.author = req.query.author.trim()
   }
 
+  if(req.query.keyword){
+      conditions.title = new RegExp(req.query.keyword.trim(), 'i')
+      conditions.content = new RegExp(req.query.keyword.trim(), 'i')
+  }
   User.find({}, function(err,authors){
       if (err) return next(err);
       Post.find(conditions)
@@ -62,32 +69,142 @@ router.get('/', function (req, res, next) {
                   sortby:sortby,
                   filter:{
                     category: req.query.category || "",
-                    author: req.query.author || ""
+                    author: req.query.author || "",
+                    keyword: req.query.keyword || ""
                   }
               });
           });
       })
-});
+})
 
-router.get('/add', function (req, res, next) {
+router.get('/add', auth.requireLogin,function (req, res, next) {
+
     res.render('admin/post/add', {
-        
+        action: "/admin/posts/add",
+        post: {
+            category:{ _id: ''}
+        }
     });
-});
+})
 
-router.post('/add', function (req, res, next) {
+router.post('/add', auth.requireLogin,function (req, res, next) {
+    req.checkBody('title','文章必须有标题').notEmpty()
+    req.checkBody('category','文章必须有分类').notEmpty()
+    req.checkBody('content','文章必须有内容').notEmpty()
+
+    var errors = req.validationErrors()
+    if(errors){
+        return res.render('admin/post/add',{
+            errors: errors,
+            title:req.body.title,
+            content:req.body.content,
+        })
+    }
+
+    var title = req.body.title.trim()
+    var category = req.body.category.trim()
+    var content = req.body.content
+
+    User.findOne({}, function(err,author){
+        if (err){
+            return next(err)
+        }
+
+        var py = pinyin(title, {
+            style: pinyin.STYLE_NORMAL,
+            heteronym: false
+        }).map(function(item){
+            return item[0]
+        }).join(' ')
+
+        var post = new Post({
+            title:title,
+            slug: slug(py),
+            category:category,
+            content:content,
+            author:author,
+            published:true,
+            meta: { favorite: 0},
+            comments: [],
+            created: new Date()
+
+        })
+
+        post.save( function(err, post){
+            if(err){
+                console.log('张智超zzc:' ,err)
+                req.flash('error', '文章保存失败')
+                res.redirect('/admin/posts/add')
+            }else{
+                req.flash('info', '文章保存成功')
+                res.redirect('/admin/posts')
+            }
+        })
+    })
     
-});
+})
 
-router.get('/edit/:id', function (req, res, next) {
+router.get('/edit/:id', auth.requireLogin,function (req, res, next) {
+   if(!req.params.id){
+     return next(new Error('no  post'))
+   }
    
-});
+   Post.findOne({ _id: req.params.id})
+       .populate('category')
+       .populate('author')
+       .exec(function(err,post){
+           if(err){
+             return next(err)
+           }
 
-router.post('/edit/:id', function (req, res, next) {
+           res.render('admin/post/add',{
+                action: "/admin/posts/edit/" + post._id,
+                post:post
+           })
+       })
+})
 
-});
+router.post('/edit/:id', auth.requireLogin,function (req, res, next) {
+  if(!req.params.id){
+    return next(new Error('no  post'))
+  }
+  
+  Post.findOne({ _id: req.params.id}).exec(function(err, post){
+      if(err){
+        return next(err)
+      }
 
-router.get('/delete/:id', function (req, res, next) {
+      var title = req.body.title.trim()
+      var category = req.body.category.trim()
+      var content = req.body.content
+
+      var py = pinyin(title, {
+          style: pinyin.STYLE_NORMAL,
+          heteronym: false
+      }).map(function(item){
+          return item[0]
+      }).join(' ')
+
+
+      post.title= title
+      post.category= category
+      post.content= content
+      post.slug= slug(py)
+
+      post.save( function(err, post){
+          if(err){
+              console.log('张智超zzc:' ,err)
+              req.flash('error', '文章编辑失败')
+              res.redirect('/admin/posts/edit/' + post._id)
+          }else{
+              req.flash('info', '文章编辑成功')
+              res.redirect('/admin/posts')
+          }
+      })
+  })
+})
+
+router.get('/delete/:id', auth.requireLogin,function (req, res, next) {
     if(!req.params.id){
         return next(new Error('no post id provided'))
     }
@@ -105,5 +222,5 @@ router.get('/delete/:id', function (req, res, next) {
 
         res.redirect('/admin/posts')
     })
-});
+})
 

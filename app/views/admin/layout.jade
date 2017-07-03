@@ -15,10 +15,13 @@ block main
         a.navbar-brand(href='/') NODE.JS   博客系统首页
       #navbar.navbar-collapse.collapse
         ul.nav.navbar-nav.navbar-right
-          li
-            a(href='/admin/users/logout') 
-                i.fa.fa-unlock-alt
-                | &nbsp;注销
+          if user
+              li
+                a= user.name
+              li
+                a(href='/admin/users/logout') 
+                    i.fa.fa-unlock-alt
+                    | &nbsp;注销
           li
             a(href='/admin/help') 
                 i.fa.fa-question

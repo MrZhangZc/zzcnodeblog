@@ -2,15 +2,22 @@ var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
-    Category = mongoose.model('Category');
+    Category = mongoose.model('Category')
 
 module.exports = function (app) {
     app.use('/posts', router);
 };
 
 router.get('/', function (req, res, next) {
-  Post.find({published:true})
-      .sort('created')
+
+  var conditions = {published:true}
+
+  if(req.query.keyword){
+      conditions.title = new RegExp(req.query.keyword.trim(), 'i')
+      conditions.content = new RegExp(req.query.keyword.trim(), 'i')
+  }
+  Post.find(conditions)
+      .sort('-created')
       .populate('author')
       .populate('category')
       .exec(function (err, posts) {

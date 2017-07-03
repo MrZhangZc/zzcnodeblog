@@ -40,9 +40,16 @@ block main
                             a(href='#') Twitter
                           li
                             a(href='#') Facebook
+
+                      form.navbar-form.pull-right(method="get"  action="/posts/")
+                        input.form-control(type="extx", name="keyword", placeholder="搜索")
             block other
   block footer
     footer.blog-footer
       p blog by zhangzhichao
       p
         a(href='#') Back to top
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        a(href='/admin/users/login') Login
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        a(href='/admin/users/register') Register

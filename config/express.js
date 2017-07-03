@@ -10,14 +10,18 @@ var bodyParser = require('body-parser')
 var compress = require('compression')
 var methodOverride = require('method-override')
 var mongoose = require('mongoose')
+var passport = require('passport')
+var expressValidator = require('express-validator')
 
 var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
 var flash   = require('connect-flash')
 var messages = require('express-messages')
 
 var Category = mongoose.model('Category')
+var User = mongoose.model('User')
 
-module.exports = function(app, config) {
+module.exports = function(app, config, connection) {
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -29,7 +33,7 @@ module.exports = function(app, config) {
     app.locals.pageName = req.path
     app.locals.moment = moment
     app.locals.truncate = truncate
-    Category.find(function(err, categories){
+    Category.find({}).sort('-created').exec(function(err, categories){
         if(err) {
           return next(err)
         }
@@ -44,17 +48,57 @@ module.exports = function(app, config) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+
+  app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
+   
+      while(namespace.length) {
+        formParam += '[' + namespace.shift() + ']';
+      }
+      return {
+        param : formParam,
+        msg   : msg,
+        value : value
+      };
+    }
+  }));
+
+  
   app.use(cookieParser());
 
   app.use(session({
       secret: 'blogzzc-test',
       resave: false,
       saveUninitialized: true,
-      cookie: {secure: false}
+      cookie: {secure: false},
+      store: new MongoStore({ mongooseConnection: connection })
   }))
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(function(req, res, next){
+      req.user = null
+      if(req.session.passport && req.session.passport.user){
+          User.findById(req.session.passport.user, function(err, user){
+              if(err) return next(err)
+
+              user.password = null
+              req.user = user
+
+              next()
+          })
+      }else{
+              next()
+      }
+  })
   app.use(flash())
   app.use(function(req,res,next){
       res.locals.messages = messages(req,res)
+      app.locals.user     = req.user
+      console.log(req.session, app.locals.user)
       next()
   })
   app.use(compress());

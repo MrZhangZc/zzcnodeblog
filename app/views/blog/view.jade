@@ -16,7 +16,8 @@ block content
       span.post-favorite 
         a(href='/posts/favorite/' + post._id)
           i.fa.fa-star &nbsp; #{post.meta.favorite || 0}
-    .post-content #{post.content}
+    .post-content
+      != post.content
 
     .post-comments
       h3 用户评论
