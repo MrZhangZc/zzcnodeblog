@@ -11,7 +11,6 @@ var compress = require('compression')
 var methodOverride = require('method-override')
 var mongoose = require('mongoose')
 var passport = require('passport')
-var path     = require('path')
 var expressValidator = require('express-validator')
 
 var session = require('express-session')
@@ -103,7 +102,7 @@ module.exports = function(app, config, connection) {
       next()
   })
   app.use(compress());
-  app.use(express.static(path.join(__dirname, '../public')));
+  app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
   var controllers = glob.sync(config.root + '/app/controllers/**/*.js');
