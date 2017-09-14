@@ -3,8 +3,10 @@
 var express = require('express'),
     config = require('./config/config'),
     glob = require('glob'),
-    mongoose = require('mongoose'),
-    mongoose.Promise = global.Promise;
+    mongoose = require('mongoose');
+
+
+mongoose.Promise = global.Promise;
 
 
 

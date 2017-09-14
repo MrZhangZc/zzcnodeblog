@@ -1,7 +1,9 @@
 var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
-    env = process.env.NODE_ENV || 'production',
-    mongoose.Promise = global.Promise;
+    env = process.env.NODE_ENV || 'production';
+
+
+mongoose.Promise = global.Promise;
 
 var config = {
   production: {
@@ -10,7 +12,7 @@ var config = {
       name: 'blogzzc'
     },
     port: process.env.PORT || 5555,
-    db: 'mongodb://blog_runner:kobe241298@127.0.0.1:27017/blogzzc-production'
+    db: 'mongodb://csxh_runner:chengshixinghui666@127.0.0.1:27017/blogzzc'
   }
 };
 
