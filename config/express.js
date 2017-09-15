@@ -22,9 +22,9 @@ var Category = mongoose.model('Category')
 var User = mongoose.model('User')
 
 module.exports = function(app, config, connection) {
-  var env = process.env.NODE_ENV || 'development';
+  var env = process.env.NODE_ENV || 'production';
   app.locals.ENV = env;
-  app.locals.ENV_DEVELOPMENT = env == 'development';
+  app.locals.ENV_DEVELOPMENT = env == 'production';
   
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
@@ -116,7 +116,7 @@ module.exports = function(app, config, connection) {
     next(err);
   });
   
-  if(app.get('env') === 'development'){
+  if(app.get('env') === 'production'){
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
       res.render('error', {

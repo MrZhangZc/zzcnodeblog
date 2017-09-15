@@ -2,9 +2,6 @@ var path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
     env = process.env.NODE_ENV || 'production';
 
-
-mongoose.Promise = global.Promise;
-
 var config = {
   production: {
     root: rootPath, 
