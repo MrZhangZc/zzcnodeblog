@@ -70,7 +70,7 @@ module.exports = function(app, config, connection) {
   app.use(cookieParser());
 
   app.use(session({
-      secret: 'blogzzc-test',
+      secret: 'production',
       resave: false,
       saveUninitialized: true,
       cookie: {secure: false},
