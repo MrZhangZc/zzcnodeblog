@@ -8,7 +8,7 @@ var config = {
     app: {
       name: 'blogzzc'
     },
-    port: process.env.PORT || 5555,
+    port: process.env.PORT || 6636,
     db: 'mongodb://csxh_runner:chengshixinghui666@127.0.0.1:27017/blogzzc'
   }
 };
