@@ -408,7 +408,7 @@ h6, .h6 {
     font-family: yhl;
     src: url('/fonts/yhl.ttf')
   }
-
+main
 
   /*
  * Masthead for nav
@@ -525,7 +525,6 @@ h6, .h6 {
     background-size: cover;
     border: 5px solid #FFFFFF;
   }
-
   /*
  * Blog name and description
  */
@@ -554,7 +553,7 @@ h6, .h6 {
   .blog-main {
     font-size: 18px;
     line-height: 1.5;
-    margin-left: -15px;
+    margin-left: 15px;
   }
 
   /* Sidebar modules for boxing content */
@@ -682,31 +681,15 @@ h6, .h6 {
   }
 
   .blog-other .blog-1 {
-    width: 100%;
-    height: 300px;
-    background-color: #FFFFFF;
-    background: url('/img/8.jpg');
-    background-size: cover;
-    border: 2px solid #FFFFFF;
+    display: none;
   }
 
   .blog-other .blog-2 {
-    width: 100%;
-    height: 300px;
-    background-color: #FFFFFF;
-    background: url('/img/9.jpg');
-    background-size: cover;
-    border: 2px solid #FFFFFF;
+    display: none;
   }
 
   .blog-other .blog-3 {
-    margin-top: 350px;
-    width: 100%;
-    height: 300px;
-    background-color: #FFFFFF;
-    background: url('/img/7.jpg');
-    background-size: cover;
-    border: 2px solid #FFFFFF;
+    display: none;
   }
 
   /*
