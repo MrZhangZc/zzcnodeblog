@@ -12,13 +12,13 @@ block about
     .pic.pic6
   .blog-about
     .about-title
-      p Welcome to Zhang Zhichao's personal blog
+      p 欢迎来到张智超的个人博客
     .about-content
-      h4 This is a full stack blogging system based on nodejs
-      h4 The main function of blogs is to write some learning experiences
-      h4 You can leave a message and communicate with me
+      h4 这是我搭建的node全栈博客
+      h4 主要作用是用来写一些我的学习记录
+      h4 你可以给我留言以及留下一些建议
     button#about-click 
-      p Click On 
+      p 点击一下
 block content
   each post in posts
     .post.post-every
@@ -67,5 +67,5 @@ block other
         .col-sm-6
           .blog-2
         .blog-3
-  script(src="/js/index.js")
+  script(src="/js/index.js").about-title
 

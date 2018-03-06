@@ -4,7 +4,6 @@
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #555;
-  font-family: MUTEFRUIT
 }
 a:hover {
 text-decoration: none; 
@@ -13,8 +12,9 @@ text-decoration: none;
 
 @font-face{
   font-family: MUTEFRUIT;
-  src: url('/fonts/MUTEFRUIT.ttf')
+  src: url('/fonts/title.ttf')
 }
+
 
 @font-face{
   font-family: BertramLP;
@@ -74,7 +74,7 @@ h6, .h6 {
 
 .blog-title{
   text-align: center;
-  font-family: MUTEFRUIT
+  font-family: MUTEFRUIT;
 }
 
 .blog-body{
@@ -208,8 +208,8 @@ h6, .h6 {
 }
 .sidebar-module .sidebar-module-title{
   text-align: center;
-  font-family: MUTEFRUIT;
-  font-style: 24px;
+  font-style: 36px;
+  font-weight: 600;
 }
 
 
