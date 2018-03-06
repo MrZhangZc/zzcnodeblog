@@ -11,12 +11,6 @@ text-decoration: none;
 
 
 @font-face{
-  font-family: MUTEFRUIT;
-  src: url('/fonts/title.ttf')
-}
-
-
-@font-face{
   font-family: BertramLP;
   src: url('/fonts/BertramLP.ttf')
 }
@@ -74,7 +68,8 @@ h6, .h6 {
 
 .blog-title{
   text-align: center;
-  font-family: MUTEFRUIT;
+  font-family: BertramLP;
+
 }
 
 .blog-body{
@@ -93,7 +88,8 @@ h6, .h6 {
   text-align: center;
   padding-top: 100px;
   font-size: 30px;
-  font-family: MUTEFRUIT;
+  font-family: yhl;
+
 }
 
 #about-click{
@@ -105,7 +101,8 @@ h6, .h6 {
   color: #fff;
   line-height: 48px;
   font-size: 30px;
-  font-family: BertramLP
+  font-family: yhl
+
 }
 #photo{
   width: 100%;
@@ -123,6 +120,7 @@ h6, .h6 {
   text-align: center;
   line-height: 30px;
   padding-top: 50px;
+  font-family: yhl;
 }
 .blog-images{
   display: -webkit-flex; /* Safari */

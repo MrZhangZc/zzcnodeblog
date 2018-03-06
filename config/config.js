@@ -9,8 +9,8 @@ var config = {
       name: 'blogzzc'
     },
     port: process.env.PORT || 6636,
-    //db: 'mongodb://localhost/blogzzc-test'
-    db: 'mongodb://csxh_runner:chengshixinghui666@127.0.0.1:27017/blogzzc'
+    db: 'mongodb://localhost/blogzzc-test'
+    //db: 'mongodb://csxh_runner:chengshixinghui666@127.0.0.1:27017/blogzzc'
 
   }
 };
