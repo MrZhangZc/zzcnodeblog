@@ -1,6 +1,15 @@
 extends layout
 
 block about
+  .blog-about
+    .about-title
+      p 欢迎来到张智超的个人博客
+    .about-content
+      h4 这是我搭建的node全栈博客
+      h4 主要用来写一些我的学习记录
+      h4 欢迎给我留言并提供建议
+    button#about-click 
+      p 点击一下
   img(src="/img/bg2.jpg" id="photo")
   video(src="/img/1.mp4" controls="controls" id="video")
   .blog-images
@@ -10,15 +19,6 @@ block about
     .pic.pic4
     .pic.pic5
     .pic.pic6
-  .blog-about
-    .about-title
-      p 欢迎来到张智超的个人博客
-    .about-content
-      h4 这是我搭建的node全栈博客
-      h4 主要作用是用来写一些我的学习记录
-      h4 你可以给我留言以及留下一些建议
-    button#about-click 
-      p 点击一下
 block content
   each post in posts
     .post.post-every
