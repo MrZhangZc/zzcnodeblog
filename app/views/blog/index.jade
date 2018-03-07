@@ -50,17 +50,17 @@ block other
     .row
       .col-sm-6
         form.blog-contactMe(action="/posts/contactMe/" method="post", enctype="application/x-www-form-urlencoded")
-          p.blog-contactMe-title Contact Me
+          p.blog-contactMe-title 给我留言(将会通过邮箱通知到我)
           .form-group
-            label(for="name") Name
+            label(for="name") 姓名
+            input.form-control(type="text", name="name", placeholder="Your Name...")
+          .form-group
+            label(for="email") 邮箱
             input.form-control(type="text", name="email", placeholder="Your Name...")
           .form-group
-            label(for="email") Email
-            input.form-control(type="text", name="email", placeholder="Your Name...")
-          .form-group
-            label(for="content") Content
+            label(for="content") 留言内容
             textarea.form-control(type="text", name="content", placeholder="Content...")
-          button.btn.btn-primary Send
+          button.btn.btn-primary 发送
       .col-sm-6.blog-other
         .col-sm-6
           .blog-1

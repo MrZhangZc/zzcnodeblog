@@ -2,7 +2,8 @@ var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
-    Category = mongoose.model('Category')
+    Category = mongoose.model('Category'),
+    nodemailer = require('nodemailer')
 
 module.exports = function (app) {
     app.use('/posts', router);
@@ -153,5 +154,46 @@ router.get('/favorite/:id', function (req, res, next) {
 });
 
 router.post('/comment/contactMe', function (req, res, next) {
-        
+});
+
+router.post('/contactMe', function (req, res, next) {
+    let name = req.body.name
+    let email = req.body.email
+    let content = req.body.content
+
+    function sendEmail() {
+        let transporter = nodemailer.createTransport({
+            service: 'qq',
+            auth: {
+                user: '1761997216@qq.com',//user: 'jiayouzzc@126.com',	//   
+                pass: 'jacnlcfehnmudjda'//pass: 'kobe241298'// 
+            }
+        })
+
+        var mailOptions = {
+            from: '1761997216@qq.com', // 发送者  
+            to: 'jiayouzzc@126.com', // 接受者,可以同时发送多个,以逗号隔开  
+            subject: `博客 留言`, // 标题  
+            //text: 'Hello world', // 文本  
+            html: `
+                <p>姓名:</p><p>${name}</p>
+                <p>邮箱:</p><p>${email}</p>
+                <p>留言内容:</p><p>${content}</p>
+            `
+        }
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            console.log('发送成功');
+        })
+    }
+    sendEmail()
+    
+    
+    res.redirect('/')
+    //req.flash('info', '留言已通过邮箱发送给我，我会即使联系你')
 });
